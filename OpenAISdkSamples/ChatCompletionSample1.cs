@@ -1,20 +1,36 @@
 ﻿using Azure;
 using Azure.AI.OpenAI;
+using Azure.Core.Diagnostics;
+using System.Diagnostics.Tracing;
+using Azure.Core;
 
 namespace OpenAISdkSamples;
 
 internal class ChatCompletionSample1
 {
-    public static async Task RunAsync(OpenAiConfig config)
+    public static async Task RunAsync(OpenAIConfig config)
     {
-        var client = new OpenAIClient(new Uri(config.Endpoint), new AzureKeyCredential(config.ApiKey));
+        var client = CreateClientWithCustomizedRetryOption(config);
         await GetChatCompletionsAsync(config, client);
         //await GetChatCompletionsStreamingAsync(config, client);
-
-
     }
 
-    private static async Task GetChatCompletionsAsync(OpenAiConfig config, OpenAIClient client)
+    private static OpenAIClient CreateClientWithCustomizedRetryOption(OpenAIConfig config)
+    {
+        var options = new OpenAIClientOptions
+        {
+            Retry =
+            {
+                Delay = TimeSpan.FromSeconds(2),
+                MaxRetries = 10,
+                Mode = RetryMode.Fixed
+            }
+        };
+
+        return new OpenAIClient(new Uri(config.Endpoint), new AzureKeyCredential(config.ApiKey), options);
+    }
+
+    private static async Task GetChatCompletionsAsync(OpenAIConfig config, OpenAIClient client)
     {
         var options = new ChatCompletionsOptions
         {
@@ -22,12 +38,13 @@ internal class ChatCompletionSample1
             Messages =
             {
                 new ChatMessage(ChatRole.System, """
-        あなたは Azure の専門家です。250文字以内で回答を返します。
-        """)
+                                あなたは Azure の専門家です。
+                                250文字以内で初心者にやさしい感じで回答を返します。
+                                """)
             }
         };
 
-        var firstResponse = await client.GetChatCompletionsAsync(config.ModelName, options);
+        var firstResponse = await client.GetChatCompletionsAsync(config.DeploymentName, options);
 
         var userMessages = new[]
         {
@@ -41,7 +58,7 @@ internal class ChatCompletionSample1
             options.Messages.Add(new ChatMessage(ChatRole.User, userMessage));
             Console.WriteLine($"{ChatRole.User}: {userMessage}");
 
-            var response = await client.GetChatCompletionsAsync(config.ModelName, options);
+            var response = await client.GetChatCompletionsAsync(config.DeploymentName, options);
 
             foreach (var choice in response.Value.Choices)
             {
@@ -55,7 +72,7 @@ internal class ChatCompletionSample1
         }
     }
 
-    private static async Task GetChatCompletionsStreamingAsync(OpenAiConfig config, OpenAIClient client)
+    private static async Task GetChatCompletionsStreamingAsync(OpenAIConfig config, OpenAIClient client)
     {
         var options = new ChatCompletionsOptions
         {
@@ -68,7 +85,7 @@ internal class ChatCompletionSample1
             }
         };
 
-        var firstResponse = await client.GetChatCompletionsStreamingAsync(config.ModelName, options);
+        var firstResponse = await client.GetChatCompletionsStreamingAsync(config.DeploymentName, options);
 
         var userMessages = new[]
         {
@@ -82,7 +99,7 @@ internal class ChatCompletionSample1
             options.Messages.Add(new ChatMessage(ChatRole.User, userMessage));
             Console.WriteLine($"{ChatRole.User}: {userMessage}");
 
-            var response = await client.GetChatCompletionsStreamingAsync(config.ModelName, options);
+            var response = await client.GetChatCompletionsStreamingAsync(config.DeploymentName, options);
 
             using var streamingChatCompletions = response.Value;
             Console.Write("assistant: ");
