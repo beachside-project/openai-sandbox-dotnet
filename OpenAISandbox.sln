@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAISdkSamples", "OpenAISdkSamples\OpenAISdkSamples.csproj", "{DD1E8670-E5E6-4A28-85FD-8CE6C6BBB88D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAISdkSamples", "OpenAISdkSamples\OpenAISdkSamples.csproj", "{DD1E8670-E5E6-4A28-85FD-8CE6C6BBB88D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticKernel.Tutorials", "SemanticKernel.Tutorials\SemanticKernel.Tutorials.csproj", "{B0125135-EE9E-4DD6-B2C8-D76F58317F85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleFunctions", "SampleFunctions\SampleFunctions.csproj", "{BAE9B9FE-510D-4EC4-8316-BB04B698E48F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{DD1E8670-E5E6-4A28-85FD-8CE6C6BBB88D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD1E8670-E5E6-4A28-85FD-8CE6C6BBB88D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD1E8670-E5E6-4A28-85FD-8CE6C6BBB88D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0125135-EE9E-4DD6-B2C8-D76F58317F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0125135-EE9E-4DD6-B2C8-D76F58317F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0125135-EE9E-4DD6-B2C8-D76F58317F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0125135-EE9E-4DD6-B2C8-D76F58317F85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAE9B9FE-510D-4EC4-8316-BB04B698E48F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAE9B9FE-510D-4EC4-8316-BB04B698E48F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAE9B9FE-510D-4EC4-8316-BB04B698E48F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAE9B9FE-510D-4EC4-8316-BB04B698E48F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,6 @@ using OpenAISdkSamples;
 
 Console.WriteLine("ChatCompletion sample");
 
-var config = OpenAIConfig.ReadFromUserSecrets();
+var config = OpenAIOptions.ReadFromUserSecrets();
 
 await ChatCompletionSample1.RunAsync(config);

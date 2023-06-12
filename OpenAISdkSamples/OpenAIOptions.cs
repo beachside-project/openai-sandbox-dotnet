@@ -11,24 +11,24 @@ namespace OpenAISdkSamples;
 //     }
 // }
 
-public class OpenAIConfig
+public class OpenAIOptions
 {
     public string Endpoint { get; set; }
     public string ApiKey { get; set; }
     public string DeploymentName { get; set; }
 
-    public static OpenAIConfig ReadFromUserSecrets()
+    public static OpenAIOptions ReadFromUserSecrets()
     {
         var builder = new ConfigurationBuilder()
             .AddUserSecrets<Program>();
-        return builder.Build().GetSection("OpenAIConfig").Get<OpenAIConfig>();
+        return builder.Build().GetSection(nameof(OpenAIOptions)).Get<OpenAIOptions>();
     }
 
-    public static OpenAIConfig ReadFromLocalSettingsJson()
+    public static OpenAIOptions ReadFromLocalSettingsJson()
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("local.settings.json");
-        return builder.Build().GetSection(nameof(OpenAIConfig)).Get<OpenAIConfig>();
+        return builder.Build().GetSection(nameof(OpenAIOptions)).Get<OpenAIOptions>();
     }
 }

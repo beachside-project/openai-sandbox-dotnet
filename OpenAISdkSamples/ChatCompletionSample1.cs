@@ -8,14 +8,14 @@ namespace OpenAISdkSamples;
 
 internal class ChatCompletionSample1
 {
-    public static async Task RunAsync(OpenAIConfig config)
+    public static async Task RunAsync(OpenAIOptions config)
     {
         var client = CreateClientWithCustomizedRetryOption(config);
         await GetChatCompletionsAsync(config, client);
         //await GetChatCompletionsStreamingAsync(config, client);
     }
 
-    private static OpenAIClient CreateClientWithCustomizedRetryOption(OpenAIConfig config)
+    private static OpenAIClient CreateClientWithCustomizedRetryOption(OpenAIOptions config)
     {
         var options = new OpenAIClientOptions
         {
@@ -30,7 +30,7 @@ internal class ChatCompletionSample1
         return new OpenAIClient(new Uri(config.Endpoint), new AzureKeyCredential(config.ApiKey), options);
     }
 
-    private static async Task GetChatCompletionsAsync(OpenAIConfig config, OpenAIClient client)
+    private static async Task GetChatCompletionsAsync(OpenAIOptions config, OpenAIClient client)
     {
         var options = new ChatCompletionsOptions
         {
@@ -72,7 +72,7 @@ internal class ChatCompletionSample1
         }
     }
 
-    private static async Task GetChatCompletionsStreamingAsync(OpenAIConfig config, OpenAIClient client)
+    private static async Task GetChatCompletionsStreamingAsync(OpenAIOptions config, OpenAIClient client)
     {
         var options = new ChatCompletionsOptions
         {
