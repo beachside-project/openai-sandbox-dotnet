@@ -2,7 +2,7 @@
 
 namespace SemanticKernel.Tutorials.Samples.Skills;
 
-internal class LockerSearchSkill
+internal class LockerSearchNativeFunction
 {
     private static readonly HttpClient _client = new();
 

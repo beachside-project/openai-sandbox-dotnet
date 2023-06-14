@@ -15,5 +15,5 @@ var options = SemanticKernelOptions.CreateClientFromUserSecrets();
 //await _6_SemanticMemoryWithEmbeddings.RunAsync(options);
 
 
-//await SequentialPlannerSample1.RunAsync(options);
-await SequentialPlannerSample2.RunAsync(options);
+await MultiSkillBotSample.RunAsync(options);
+//await LockerSearchBotSample.RunAsync(options);
