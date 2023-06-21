@@ -4,6 +4,7 @@ internal class Program
 {
     private static async Task Main()
     {
-        await _1_Guidelines.RunAsync();
+        //await _2_Iterative_Prompt_Development.RunAsync();
+        await _3_Summarizing_Inferring.RunAsync();
     }
 }
