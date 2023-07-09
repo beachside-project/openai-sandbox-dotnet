@@ -1,0 +1,63 @@
+﻿using Azure;
+using Azure.AI.OpenAI;
+using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
+
+namespace ConsoleApp1;
+
+internal class SearchOperations
+{
+    internal async Task RunAsync(AppOptions options)
+    {
+        var openAIClient = new OpenAIClient(new Uri(options.OpenAIEndpoint), new AzureKeyCredential(options.OpenAIKey));
+        var searchClient = new SearchClient(new Uri(options.CognitiveSearchEndpoint), options.CognitiveSearchIndexName, new AzureKeyCredential(options.CognitiveSearchAdminKey));
+
+        await SearchSingleVectorWithAsync(searchClient, openAIClient, options, "titleVector", "security feature");
+    }
+
+    private async Task SearchSingleVectorWithAsync(SearchClient searchClient, OpenAIClient openAIClient, AppOptions options, string vectorField, string query)
+    {
+        if (vectorField != "contentVector" && vectorField != "titleVector")
+        {
+            Console.WriteLine($"Target vector field is invalid (input: {vectorField})");
+            return;
+        }
+
+        var queryEmbeddings = await GenerateEmbeddingsAsync(openAIClient, options, query);
+
+        var searchQueryVector = new SearchQueryVector
+        {
+            KNearestNeighborsCount = 3,
+            Fields = vectorField,
+            Value = queryEmbeddings.ToArray()
+        };
+        var searchOptions = new SearchOptions
+        {
+            Vector = searchQueryVector,
+            Size = 3,
+            Select = { "title", "content", "category" }
+        };
+
+        SearchResults<SearchDocument> response = await searchClient.SearchAsync<SearchDocument>(null, searchOptions);
+
+        await foreach (SearchResult<SearchDocument> result in response.GetResultsAsync())
+        {
+            Console.WriteLine($"Title: {result.Document["title"]}");
+            Console.WriteLine($"Score: {result.Score}");
+            Console.WriteLine($"Content: {result.Document["content"]}");
+            Console.WriteLine($"Category: {result.Document["category"]}");
+            Console.WriteLine();
+        }
+    }
+
+    private async Task SearchWithVectorAndFilter(SearchClient searchClient, OpenAIClient openAIClient, AppOptions options, string vectorField, string query, string filter)
+    {
+        //https://github.com/Azure/cognitive-search-vector-pr/blob/718183770e2df29c55e65d339f4d5110dd7e9441/demo-dotnet/code/Program.cs#L126
+    }
+
+    private async Task<IReadOnlyList<float>> GenerateEmbeddingsAsync(OpenAIClient client, AppOptions options, string inputText)
+    {
+        var response = await client.GetEmbeddingsAsync(options.OpenAIEmbeddingsDeploymentName, new EmbeddingsOptions(inputText));
+        return response.Value.Data[0].Embedding;
+    }
+}

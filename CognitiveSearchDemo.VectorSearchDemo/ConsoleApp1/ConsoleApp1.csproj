@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <UserSecretsId>e06bacbb-38a5-45b5-8fe6-9c1bf1471460</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.5" />
+    <PackageReference Include="Azure.Search.Documents" Version="11.5.0-alpha.20230707.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="sample-data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
