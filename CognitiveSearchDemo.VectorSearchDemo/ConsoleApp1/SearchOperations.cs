@@ -12,10 +12,12 @@ internal class SearchOperations
         var openAIClient = new OpenAIClient(new Uri(options.OpenAIEndpoint), new AzureKeyCredential(options.OpenAIKey));
         var searchClient = new SearchClient(new Uri(options.CognitiveSearchEndpoint), options.CognitiveSearchIndexName, new AzureKeyCredential(options.CognitiveSearchAdminKey));
 
-        await SearchSingleVectorWithAsync(searchClient, openAIClient, options, "titleVector", "security feature");
+        const string vectorField = "titleVector";
+        const string query = "security feature";
+        await SearchWithSingleVectorAsync(searchClient, openAIClient, options, vectorField, query);
     }
 
-    private async Task SearchSingleVectorWithAsync(SearchClient searchClient, OpenAIClient openAIClient, AppOptions options, string vectorField, string query)
+    private async Task SearchWithSingleVectorAsync(SearchClient searchClient, OpenAIClient openAIClient, AppOptions options, string vectorField, string query)
     {
         if (vectorField != "contentVector" && vectorField != "titleVector")
         {
@@ -40,7 +42,7 @@ internal class SearchOperations
 
         SearchResults<SearchDocument> response = await searchClient.SearchAsync<SearchDocument>(null, searchOptions);
 
-        await foreach (SearchResult<SearchDocument> result in response.GetResultsAsync())
+        await foreach (var result in response.GetResultsAsync())
         {
             Console.WriteLine($"Title: {result.Document["title"]}");
             Console.WriteLine($"Score: {result.Score}");
@@ -50,7 +52,7 @@ internal class SearchOperations
         }
     }
 
-    private async Task SearchWithVectorAndFilter(SearchClient searchClient, OpenAIClient openAIClient, AppOptions options, string vectorField, string query, string filter)
+    private async Task SearchWithVectorAndFilterAsync(SearchClient searchClient, OpenAIClient openAIClient, AppOptions options, string vectorField, string query, string filter)
     {
         //https://github.com/Azure/cognitive-search-vector-pr/blob/718183770e2df29c55e65d339f4d5110dd7e9441/demo-dotnet/code/Program.cs#L126
     }
