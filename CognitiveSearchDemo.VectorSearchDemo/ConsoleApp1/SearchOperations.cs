@@ -19,6 +19,8 @@ internal class SearchOperations
 
     private async Task SearchWithSingleVectorAsync(SearchClient searchClient, OpenAIClient openAIClient, AppOptions options, string vectorField, string query)
     {
+        const int dataCount = 3;
+
         if (vectorField != "contentVector" && vectorField != "titleVector")
         {
             Console.WriteLine($"Target vector field is invalid (input: {vectorField})");
@@ -29,14 +31,15 @@ internal class SearchOperations
 
         var searchQueryVector = new SearchQueryVector
         {
-            KNearestNeighborsCount = 3,
+            // K-NN で予測するデータから近い順に取得するデータの個数
+            KNearestNeighborsCount = dataCount,
             Fields = vectorField,
             Value = queryEmbeddings.ToArray()
         };
         var searchOptions = new SearchOptions
         {
             Vector = searchQueryVector,
-            Size = 3,
+            Size = dataCount,
             Select = { "title", "content", "category" }
         };
 
