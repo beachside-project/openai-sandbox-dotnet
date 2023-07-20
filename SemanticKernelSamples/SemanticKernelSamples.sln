@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticKernelSamples.CognitiveSearchMemorySample", "SemanticKernelSamples.CognitiveSearchMemorySample\SemanticKernelSamples.CognitiveSearchMemorySample.csproj", "{A6F279B7-8E62-4FCF-8566-30DA36490C45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticKernelSamples.CognitiveSearchMemorySample", "SemanticKernelSamples.CognitiveSearchMemorySample\SemanticKernelSamples.CognitiveSearchMemorySample.csproj", "{A6F279B7-8E62-4FCF-8566-30DA36490C45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlannerSamples", "PlannerSamples\PlannerSamples.csproj", "{EB66F096-D466-4D29-BEDC-562F3CFCAA64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A6F279B7-8E62-4FCF-8566-30DA36490C45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6F279B7-8E62-4FCF-8566-30DA36490C45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6F279B7-8E62-4FCF-8566-30DA36490C45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB66F096-D466-4D29-BEDC-562F3CFCAA64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB66F096-D466-4D29-BEDC-562F3CFCAA64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB66F096-D466-4D29-BEDC-562F3CFCAA64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB66F096-D466-4D29-BEDC-562F3CFCAA64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
