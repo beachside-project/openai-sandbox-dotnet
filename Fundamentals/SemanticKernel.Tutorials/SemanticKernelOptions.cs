@@ -15,6 +15,6 @@ public class SemanticKernelOptions
         return new ConfigurationBuilder()
             .AddUserSecrets<Program>()
             .Build()
-            .GetSection(nameof(SemanticKernelOptions)).Get<SemanticKernelOptions>();
+            .GetRequiredSection(nameof(SemanticKernelOptions)).Get<SemanticKernelOptions>();
     }
 }

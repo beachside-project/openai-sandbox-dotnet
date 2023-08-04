@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Learning.PromptEngineering;
+namespace TokenCountConsole;
 
-public class OpenAIOptions
+internal class OpenAIOptions
 {
     public string Endpoint { get; set; }
+
     public string ApiKey { get; set; }
     public string DeploymentName { get; set; }
 
@@ -12,6 +13,6 @@ public class OpenAIOptions
     {
         var builder = new ConfigurationBuilder()
             .AddUserSecrets<Program>();
-        return builder.Build().GetSection(nameof(OpenAIOptions)).Get<OpenAIOptions>();
+        return builder.Build().GetRequiredSection(nameof(OpenAIOptions)).Get<OpenAIOptions>();
     }
 }

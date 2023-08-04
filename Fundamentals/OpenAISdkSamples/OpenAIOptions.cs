@@ -21,7 +21,7 @@ public class OpenAIOptions
     {
         var builder = new ConfigurationBuilder()
             .AddUserSecrets<Program>();
-        return builder.Build().GetSection(nameof(OpenAIOptions)).Get<OpenAIOptions>();
+        return builder.Build().GetRequiredSection(nameof(OpenAIOptions)).Get<OpenAIOptions>();
     }
 
     public static OpenAIOptions ReadFromLocalSettingsJson()
@@ -29,6 +29,6 @@ public class OpenAIOptions
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("local.settings.json");
-        return builder.Build().GetSection(nameof(OpenAIOptions)).Get<OpenAIOptions>();
+        return builder.Build().GetRequiredSection(nameof(OpenAIOptions)).Get<OpenAIOptions>();
     }
 }

@@ -10,9 +10,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.5" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+		<PackageReference Include="Azure.AI.OpenAI" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" VersionOverride="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" VersionOverride="6.0.1" />
 	</ItemGroup>
 
 </Project>

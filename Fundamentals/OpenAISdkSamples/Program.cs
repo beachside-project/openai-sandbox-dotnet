@@ -6,4 +6,4 @@ Console.WriteLine("ChatCompletion sample");
 
 var config = OpenAIOptions.ReadFromUserSecrets();
 
-await ChatCompletionSample1.RunAsync(config);
+//await ChatCompletionSample1.RunAsync(config);
