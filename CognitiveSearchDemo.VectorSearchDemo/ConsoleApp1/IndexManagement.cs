@@ -27,13 +27,22 @@ internal class IndexManagement
         const string vectorSearchConfigName = "vectorConfig1";
         const string semanticSearchConfigName = "vectorConfig1";
 
+
+        var vectorConfig = new HnswVectorSearchAlgorithmConfiguration(vectorSearchConfigName)
+        {
+            // Hnsw のパラメーター設定はこんな感じ。
+            // 値に関してはこちらのドキュメント: https://learn.microsoft.com/en-us/azure/search/vector-search-overview#what-is-the-embedding-space
+            // 実装にもコメントが書かれている: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/src/Generated/Models/HnswParameters.cs
+            Parameters = new HnswParameters()
+        };
+
         SearchIndex searchIndex = new(name)
         {
             VectorSearch = new()
             {
-                AlgorithmConfigurations =
+                AlgorithmConfigurations = 
                 {
-                    new HnswVectorSearchAlgorithmConfiguration(vectorSearchConfigName)
+                    vectorConfig
                 }
             },
             SemanticSettings = new()
