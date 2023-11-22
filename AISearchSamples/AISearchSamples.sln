@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AISearchSamples", "AISearchSamples\AISearchSamples.csproj", "{F4ACE3EF-1E96-4623-BB0B-620FA43BF719}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4ACE3EF-1E96-4623-BB0B-620FA43BF719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4ACE3EF-1E96-4623-BB0B-620FA43BF719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4ACE3EF-1E96-4623-BB0B-620FA43BF719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4ACE3EF-1E96-4623-BB0B-620FA43BF719}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0082AA2C-FAAA-4C1F-AE8D-CB92D224C21D}
+	EndGlobalSection
+EndGlobal
