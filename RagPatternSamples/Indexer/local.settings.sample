@@ -1,0 +1,13 @@
+{
+    "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "CosmosConnection": "",
+    "AzureOpenAIOptions:Endpoint": "https://oai-elle-jpe.openai.azure.com/",
+    "AzureOpenAIOptions:ApiKey": "",
+    "AISearchOptions:Endpoint": "https://srch-elle-cs-1-4ylsx7.search.windows.net",
+    "AISearchOptions:AdminKey": "",
+    "AISearchOptions:IndexName": "azure2"
+  }
+}
