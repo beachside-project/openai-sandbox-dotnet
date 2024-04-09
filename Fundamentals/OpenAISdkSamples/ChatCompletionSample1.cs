@@ -1,7 +1,6 @@
-﻿using Azure;
+﻿using System.Text.Json;
+using Azure;
 using Azure.AI.OpenAI;
-using Azure.Core.Diagnostics;
-using System.Diagnostics.Tracing;
 using Azure.Core;
 
 namespace OpenAISdkSamples;
@@ -11,8 +10,8 @@ internal class ChatCompletionSample1
     public static async Task RunAsync(OpenAIOptions config)
     {
         var client = CreateClientWithCustomizedRetryOption(config);
-        await GetChatCompletionsAsync(config, client);
-        //await GetChatCompletionsStreamingAsync(config, client);
+        //await RunChatCompletionsAsync(config, client);
+        await RunChatStreamingAsync(config, client);
     }
 
     private static OpenAIClient CreateClientWithCustomizedRetryOption(OpenAIOptions config)
@@ -30,21 +29,19 @@ internal class ChatCompletionSample1
         return new OpenAIClient(new Uri(config.Endpoint), new AzureKeyCredential(config.ApiKey), options);
     }
 
-    private static async Task GetChatCompletionsAsync(OpenAIOptions config, OpenAIClient client)
+    private static async Task RunChatCompletionsAsync(OpenAIOptions config, OpenAIClient client)
     {
         var options = new ChatCompletionsOptions
         {
-            MaxTokens = 300,
+            DeploymentName = config.DeploymentName,
+            MaxTokens = 1000,
             Messages =
             {
-                new ChatMessage(ChatRole.System, """
-                                あなたは Azure の専門家です。
-                                250文字以内で初心者にやさしい感じで回答を返します。
+                new ChatRequestSystemMessage("""
+                                あなたは Azure の専門家です。初心者にやさしい口調で回答を返します。
                                 """)
             }
         };
-
-        var firstResponse = await client.GetChatCompletionsAsync(config.DeploymentName, options);
 
         var userMessages = new[]
         {
@@ -55,15 +52,15 @@ internal class ChatCompletionSample1
 
         foreach (var userMessage in userMessages)
         {
-            options.Messages.Add(new ChatMessage(ChatRole.User, userMessage));
+            options.Messages.Add(new ChatRequestUserMessage(userMessage));
             Console.WriteLine($"{ChatRole.User}: {userMessage}");
 
-            var response = await client.GetChatCompletionsAsync(config.DeploymentName, options);
+            var response = await client.GetChatCompletionsAsync(options);
 
             foreach (var choice in response.Value.Choices)
             {
                 Console.WriteLine($"{choice.Message.Role}: {choice.Message.Content}");
-                options.Messages.Add(new ChatMessage(choice.Message.Role, choice.Message.Content));
+                options.Messages.Add(new ChatRequestAssistantMessage(choice.Message.Content));
             }
 
             // CompletionTokens: 今回応答したメッセージのトークン数。
@@ -72,47 +69,51 @@ internal class ChatCompletionSample1
         }
     }
 
-    private static async Task GetChatCompletionsStreamingAsync(OpenAIOptions config, OpenAIClient client)
+    private static async Task RunChatStreamingAsync(OpenAIOptions config, OpenAIClient client)
     {
         var options = new ChatCompletionsOptions
         {
-            MaxTokens = 300,
+            DeploymentName = config.DeploymentName,
+            MaxTokens = 1000,
             Messages =
             {
-                new ChatMessage(ChatRole.System, """
-        あなたは Azure の専門家です。250文字以内で回答を返します。
+                new ChatRequestSystemMessage("""
+        あなたは Azure の専門家です。初心者にやさしい口調で回答を返します。
         """)
             }
         };
 
-        var firstResponse = await client.GetChatCompletionsStreamingAsync(config.DeploymentName, options);
-
         var userMessages = new[]
         {
             "こんにちは、私はあつしです。",
-            "Azure Open AI とはなんですか。50文字くらいで説明してください",
+            "Azure Open AI とはなんですか。100文字くらいで説明してください",
             "私の名前を覚えていますか。"
         };
 
         foreach (var userMessage in userMessages)
         {
-            options.Messages.Add(new ChatMessage(ChatRole.User, userMessage));
-            Console.WriteLine($"{ChatRole.User}: {userMessage}");
-
-            var response = await client.GetChatCompletionsStreamingAsync(config.DeploymentName, options);
-
-            using var streamingChatCompletions = response.Value;
-            Console.Write("assistant: ");
-            await foreach (var choice in streamingChatCompletions.GetChoicesStreaming())
+            options.Messages.Add(new ChatRequestUserMessage(userMessage));
+            var assistantMessage = string.Empty;
+            
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in await client.GetChatCompletionsStreamingAsync(options))
             {
-                await foreach (var message in choice.GetMessageStreaming())
+                if (chatUpdate.Role.HasValue)
                 {
-                    // 1トークンづつとれる (たぶん。正確なトークンかは不明)
-                    Console.Write(message.Content);
+                    Console.Write($"{chatUpdate.Role.Value}: ");
                 }
-                Console.WriteLine();
+                if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+                {
+                    Console.Write(chatUpdate.ContentUpdate);
+                    assistantMessage += chatUpdate.ContentUpdate;
+                }
             }
+
+            options.Messages.Add(new ChatRequestAssistantMessage(assistantMessage));
+
+            Console.WriteLine("\n----------------------------------------------\n");
         }
 
+        Console.WriteLine($"Messages count: {options.Messages.Count}");
+        Console.WriteLine("\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
     }
 }

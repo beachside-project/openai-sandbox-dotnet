@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAISdkSamples", "OpenAIS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learning.PromptEngineering", "Learning.PromptEngineering\Learning.PromptEngineering.csproj", "{8232D5B5-6DBB-4640-B969-88B877BA349E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenCountConsole", "TokenCountConsole\TokenCountConsole.csproj", "{6ECC4EF0-97FA-439E-A8BF-B30619A0AD96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokenCountConsole", "TokenCountConsole\TokenCountConsole.csproj", "{6ECC4EF0-97FA-439E-A8BF-B30619A0AD96}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B0FDFDD-08ED-41D7-A9F1-9C7E85831414}"
 	ProjectSection(SolutionItems) = preProject
